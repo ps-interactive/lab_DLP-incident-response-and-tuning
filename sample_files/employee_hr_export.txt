@@ -1,0 +1,21 @@
+Human Resources Export
+Generated: 2026-06-05
+
+Employee Name: Sarah Johnson
+Employee ID: 10245
+Department: Finance
+
+SSN: 123-45-6789
+SSN: 555-22-1111
+
+Emergency Contact:
+Michael Johnson
+Phone: 512-555-1843
+
+Company Credit Card:
+4111 1111 1111 1111
+
+Backup Card:
+5555 5555 5555 4444
+
+Classification: CONFIDENTIAL
