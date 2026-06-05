@@ -3,18 +3,18 @@ import re
 DLP_RULES = {
     "ssn": {
         "pattern": ,
-        "severity": "high"
+        "severity": ""
     },
     "credit_card": {
         "pattern": ,
-        "severity": "high"
+        "severity": ""
     },
     "api_key": {
         "pattern": ,
-        "severity": "high"
+        "severity": ""
     },
     "confidential_keyword": {
         "pattern": ,
-        "severity": "medium"
+        "severity": ""
     }
 }
