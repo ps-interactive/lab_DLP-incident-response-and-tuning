@@ -1,5 +1,6 @@
 import os
 import json
+import subprocess
 from datetime import datetime
 from rules import DLP_RULES
 
@@ -22,10 +23,39 @@ def classify_file(matches):
         return "low"
     return "none"
 
+def apply_classification_tag(file_path, classification):
+    try:
+        subprocess.run(
+            [
+                "setfattr",
+                "-n",
+                "user.classification",
+                "-v",
+                classification,
+                file_path
+            ],
+            check=True
+        )
+
+        print(
+            f"Applied classification '{classification}' "
+            f"to {file_path}"
+        )
+
+    except subprocess.CalledProcessError as error:
+        print(
+            f"Failed to tag {file_path}: {error}"
+        )
+
 def scan_file(file_path):
     alerts = []
 
-    with open(file_path, "r", encoding="utf-8", errors="ignore") as file:
+    with open(
+        file_path,
+        "r",
+        encoding="utf-8",
+        errors="ignore"
+    ) as file:
         content = file.read()
 
     for rule_name, rule in DLP_RULES.items():
@@ -52,11 +82,20 @@ def main():
 
         if os.path.isfile(file_path):
             file_alerts = scan_file(file_path)
+
             classification = classify_file(file_alerts)
+
+            if classification != "none":
+                apply_classification_tag(
+                    file_path,
+                    classification
+                )
 
             for alert in file_alerts:
                 alert["classification"] = classification
-                alert["timestamp"] = datetime.utcnow().isoformat() + "Z"
+                alert["timestamp"] = (
+                    datetime.utcnow().isoformat() + "Z"
+                )
 
             all_alerts.extend(file_alerts)
 
@@ -65,7 +104,11 @@ def main():
     with open(ALERT_FILE, "w") as output:
         json.dump(all_alerts, output, indent=4)
 
-    print(f"Scan complete. {len(all_alerts)} alerts written to {ALERT_FILE}")
+    print(
+        f"Scan complete. "
+        f"{len(all_alerts)} alerts written to "
+        f"{ALERT_FILE}"
+    )
 
 if __name__ == "__main__":
     main()
