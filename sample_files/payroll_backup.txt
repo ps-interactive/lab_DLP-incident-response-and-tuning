@@ -1,0 +1,16 @@
+Payroll System Backup
+Generated: 2026-06-05
+
+Database Server: payroll-prod.company.local
+
+api_key = "payroll_api_key_prod_123456789"
+
+token = "payroll_access_token_abcdef123456"
+
+Administrator Notes:
+This backup contains employee compensation data.
+
+restricted
+
+SSN: 444-55-6666
+Credit Card: 4111 1111 1111 1111
