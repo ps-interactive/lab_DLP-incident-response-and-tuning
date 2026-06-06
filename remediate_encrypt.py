@@ -44,11 +44,12 @@ def encrypt_file(file_path):
 
 def main():
     alerts = load_alerts()
-
     sensitive_files = set()
 
     for alert in alerts:
-        if alert.get("severity") in ["medium", "high"]:
+        classification = str(alert.get("classification", "")).strip().lower()
+
+        if classification in ["medium", "high"]:
             sensitive_files.add(alert["file_path"])
 
     if not sensitive_files:
